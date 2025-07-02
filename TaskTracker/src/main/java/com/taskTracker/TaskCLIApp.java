@@ -9,7 +9,7 @@ public class TaskCLIApp {
 
     public static void main(String[] args) {
         if(args.length  == 0){
-            System.out.println("Command");
+            System.out.println("Please specify a command.");
             return;
         }
 
@@ -19,6 +19,7 @@ public class TaskCLIApp {
         switch (command){
             case ADD_TASK -> {
                 System.out.println("Task added successfully (ID: " + taskService.addTask(args[1]) + ")");
+
             }
             case UPDATE_TASK -> {
 

@@ -1,6 +1,7 @@
 package com.taskTracker;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Task {
     private Long id; //A unique identifier for the task
@@ -55,5 +56,28 @@ public class Task {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+
+    public static String toJson(Task task) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
+        return "{"
+                + "\"id\": " + task.getId() + ","
+                + "\"description\": \"" + escapeJson(task.getDescription()) + "\","
+                + "\"status\": \"" + task.getStatus().name() + "\","
+                + "\"createdAt\": \"" + task.getCreatedAt().format(formatter) + "\","
+                + "\"updatedAt\": \"" + task.getUpdatedAt().format(formatter) + "\""
+                + "}";
+    }
+
+    private static String escapeJson(String s) {
+        return s.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\b", "\\b")
+                .replace("\f", "\\f")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
     }
 }
