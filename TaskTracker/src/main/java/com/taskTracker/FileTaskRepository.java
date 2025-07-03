@@ -32,6 +32,7 @@ public class FileTaskRepository implements TaskRepository{
             for(String item:items) {
                 item = item.replaceAll("}", "").replaceAll("}", "").replace("\"", "");
                 String[] task = item.split(",");
+                if(task.length == 0) break;
 
                 Long id = Long.valueOf( task[0].split(":")[1].strip() );
                 String description = task[1].split(":")[1].strip();
@@ -54,10 +55,16 @@ public class FileTaskRepository implements TaskRepository{
     @Override
     public void saveTasks(List<Task> tasks) {
         StringBuilder stringBuilder = new StringBuilder();
+        int step = 0;
+        int count = tasks.size()-1;
         stringBuilder.append("[\n");
         for(Task task:tasks){
             String json = Task.toJson(task);
             stringBuilder.append(json);
+            if(step != count) {
+                stringBuilder.append(",");
+            }
+            step++;
         }
         stringBuilder.append("\n]");
 
